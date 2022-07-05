@@ -3,6 +3,7 @@ import { useUser } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
 import axios from 'axios'
 import RoomCard from "../components/RoomCard";
+import Grid from '@mui/material/Grid';
 
 export default function Home() {
   
@@ -47,7 +48,7 @@ export default function Home() {
         const email = user.email;
 
 
-        const res = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/${email}`).catch(function (error) {
+        const res = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${email}`).catch(function (error) {
           if(error.response) {
             console.log("email is not in api");
             router.push("/signup");
@@ -84,16 +85,34 @@ export default function Home() {
   // then in the map instantiate a Room Card and pass the json as a prop 
   // and inside the map , the map function should return a list of 4 RoomCard components 
   // then you will pass the list of room card compoentns into the return to render 
+
+  const renderedRooms = rooms.map((r) => {
+    return (
+        <Grid item md={5}> <RoomCard room = {r} key = {r._id}/> </Grid>
+    )
+  })
   
   return (
     <div>
-      <div>
-        <a href="/api/auth/login">Login</a>
-        <a href="/api/auth/logout">Logout</a>
-      </div>
-      {
-        rooms.length > 0 && <RoomCard room = {rooms[0]}/>
-      }
+      <section class="container">
+        <div id="col-1">
+          <a href="/api/auth/login">Login</a>
+          <br />
+          <a href="/api/auth/logout">Logout</a>
+
+          <div class="header">
+            <h1>V.Scoop</h1>
+            <p> Your daily online museum digest </p>
+            <p> Discover, distribute, and discuss </p>
+          </div>
+        </div>
+        <div id="col-2">
+          {
+            rooms.length > 0 && <Grid container spacing={0.75}> {renderedRooms} </Grid> 
+          }
+          
+        </div>
+      </section>
     </div>
     
   )

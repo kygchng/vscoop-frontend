@@ -1,0 +1,15 @@
+.card-form {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    align-content: space-around;
+  }
+  
+  .card-form .card-form-group {
+    margin-right: 2em;
+    padding: 10px
+  }
+  
+  .card-form button {
+    margin-left: auto;
+  }
