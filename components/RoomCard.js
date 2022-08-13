@@ -7,6 +7,7 @@ import { CardActionArea } from '@mui/material';
 import { useUser } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
 
+
 import styles from './RoomCard.module.css';
 
 export default function ActionAreaCard({room}) {

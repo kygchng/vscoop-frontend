@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import axios from 'axios'
 import RoomCard from "../components/RoomCard";
 import Grid from '@mui/material/Grid';
-
 export default function Home() {
   
   const { user, error, isLoading } = useUser();
@@ -80,6 +79,21 @@ export default function Home() {
 
   }, [user])
 
+
+
+  const checkUser = (room) => {
+    console.log("you clicked to check user");
+    console.log("this is the room", room);
+
+    if (user) {
+        console.log("you are loggied in ")
+        router.push('/allrooms')
+    } else {
+        router.push("/api/auth/login")
+    }
+  }
+
+
   // over here before the return perform a mapping of the rooms state
   // because each element in rooms would be a json
   // then in the map instantiate a Room Card and pass the json as a prop 
@@ -110,6 +124,8 @@ export default function Home() {
           {
             rooms.length > 0 && <Grid container spacing={0.75}> {renderedRooms} </Grid> 
           }
+          <br />
+          <p onClick = {() => checkUser()}>View All Rooms</p>
           
         </div>
       </section>

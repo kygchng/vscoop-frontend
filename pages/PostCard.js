@@ -52,6 +52,13 @@ export default function ActionAreaCard({post}) {
         getCreator();
     }, [])
 
+    const getId = () => {
+      var postIdStr = String(post._id)
+      localStorage.setItem('postIdStr', postIdStr);
+      console.log("saved post id: ", postIdStr);
+      router.push("/post");
+    }
+
     return (
       <Paper
         sx={{
@@ -63,30 +70,33 @@ export default function ActionAreaCard({post}) {
             theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         }}
       >
-        <Grid container spacing={2}>
-          <Grid item>
-            <ButtonBase sx={{ width: 128, height: 128 }}>
-              <Img alt="complex" src={post.picture} />
-            </ButtonBase>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography gutterBottom style={{ wordWrap: "break-word" }} variant="subtitle1" component="div">
-                  <strong>{post.title}</strong>
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {creator != null && creator.username}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                  {post.likes.length} Likes
-                </Typography>
+        <div onClick = {() => getId()}>
+          <Grid container spacing={2}>
+            <Grid item>
+              <ButtonBase sx={{ width: 128, height: 128 }}>
+                <Img alt="complex" src={post.picture} />
+              </ButtonBase>
+            </Grid>
+            <Grid item xs={12} sm container>
+              <Grid item xs container direction="column" spacing={2}>
+                <Grid item xs>
+                  <Typography gutterBottom style={{ wordWrap: "break-word" }} variant="subtitle1" component="div">
+                    <strong>{post.title}</strong>
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {creator != null && creator.username}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography sx={{ cursor: 'pointer' }} variant="body2">
+                    {post.likes.length} Likes
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </div>
+        
       </Paper>
     );
 }
