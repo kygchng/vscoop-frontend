@@ -144,7 +144,7 @@ export default function Post() {
         commentBody.username = userInfo.username;
         commentBody.avatarImage = userInfo.profile_picture;
         commentBody.text = contentRef.current.value;
-        commentBody.timestamp = "11:40AM 8/14/2022";
+        commentBody.timestamp = "11:40AM 8/14/2022"; // to be changed
 
 
         await axios.post('http://localhost:4000/api/v1/consumer/create/comment', commentBody)
@@ -174,7 +174,7 @@ export default function Post() {
         <div>
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
               <Stack spacing = {2}>
-                {post && <h3> {post.username} </h3>}
+                  {post && <h3> {post.username} </h3>}
                   {post && <img src={post.picture} alt="post picture" />}
                   {post && <h1> {post.title} </h1>}
                   {post && <p> {post.description} </p>}
