@@ -142,7 +142,7 @@ export default function Post() {
         commentBody.post_id = String(post._id);
         commentBody.user_id = String(userInfo._id);
         commentBody.username = userInfo.username;
-        commentBody.avatarImage = userInfo.avatarImage;
+        commentBody.avatarImage = userInfo.profile_picture;
         commentBody.text = contentRef.current.value;
         commentBody.timestamp = "11:40AM 8/14/2022";
 
