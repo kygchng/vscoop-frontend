@@ -116,11 +116,13 @@ export default function Home() {
 
           <div class="header">
             <h1>V.Scoop</h1>
-            <p> Your daily online museum digest </p>
+            <p> Your daily virtual art museum digest </p>
             <p> Discover, distribute, and discuss </p>
           </div>
         </div>
         <div id="col-2">
+          <h2> Museum Rooms </h2>
+          <br />
           {
             rooms.length > 0 && <Grid container spacing={0.75}> {renderedRooms} </Grid> 
           }

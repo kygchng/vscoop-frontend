@@ -172,8 +172,9 @@ export default function Post() {
 
     return (
         <div>
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+            <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
               <Stack spacing = {2}>
+                  {post && <img src = {post.avatarImage} alt = "avatar" width = "50" height = "50"/>}
                   {post && <h3> {post.username} </h3>}
                   {post && <img src={post.picture} alt="post picture" />}
                   {post && <h1> {post.title} </h1>}
@@ -182,10 +183,7 @@ export default function Post() {
                   <br />
                   <h1> Forum </h1>
               </Stack>
-                
             </Box>
-            
-            {comments.length > 0 && renderedComments}
 
             <br />
             <form onSubmit = {handleSubmit}>
@@ -200,7 +198,6 @@ export default function Post() {
                     rows={4}
                     fullWidth
                 />
-                <br />
                 <Button
                     type="submit"
                     color="secondary"
@@ -209,6 +206,11 @@ export default function Post() {
                     Submit
                 </Button>
             </form>
+            
+            <br />
+            {comments.length > 0 && renderedComments}
+
+            
         </div>
     )
 }
