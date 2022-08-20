@@ -6,18 +6,14 @@ import Grid from '@mui/material/Grid';
 import PostCard from './PostCard';
 
 export default function Profile () {
-  const { user, error, isLoading } = useUser();
+
   const [userInfo, setUserInfo] = useState(null);
   const [posts, setPosts] = useState([]);
-//  if (isLoading) return <div>Loading...</div>;
-
-//  if (error) return <div>{error.message}</div>;
-
-  console.log(user);
 
   useEffect( () => {
-    const getUser = async() => {
-      const userRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${user.email}`).catch(function (error) {
+    var userEmail = localStorage.getItem("email");
+    const getUserInfo = async() => {
+      const userRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${userEmail}`).catch(function (error) {
           if(error.response) {
             console.log("ignore");
           } else if (error.request) {
@@ -29,12 +25,9 @@ export default function Profile () {
       
       console.log("userInfo fetched by id: ", userRes.data);
       setUserInfo(userRes.data);
-    }
 
-    if(user) getUser();
 
-    const getPosts = async() => {
-      var userID = String(userInfo._id);
+      var userID = String(userRes.data._id);
       const postsRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/posts/user/${userID}`).catch(function(error) {
         if(error.response) {
           console.log("ignore");
@@ -49,7 +42,25 @@ export default function Profile () {
       setPosts(postsRes.data);
     }
 
-    if(userInfo) getPosts();
+    if(userEmail) getUserInfo();
+
+    // const getPosts = async() => {
+    //   var userID = String(userInfo._id);
+    //   const postsRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/posts/user/${userID}`).catch(function(error) {
+    //     if(error.response) {
+    //       console.log("ignore");
+    //     } else if (error.request) {
+    //       console.log("ignore");
+    //     } else {
+    //       console.log("ignore too");
+    //     }
+    //   })
+
+    //   console.log("posts fetched by id: ", postsRes.data);
+    //   setPosts(postsRes.data);
+    // }
+
+    // if(userEmail) getPosts();
 
 }, [])
 
@@ -91,6 +102,13 @@ const renderedPosts = posts.map((p) => {
 
 
 };
+
+// export async function getServerSideProps() {
+//   const posts = {}
+//   return {
+//     props: {posts}
+//   }
+// }
 
 
 // export async function getStaticProps(context) {

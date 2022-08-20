@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios'
 import RoomCard from "../components/RoomCard";
 import Grid from '@mui/material/Grid';
+import PersistentDrawer from '../components/NavBar';
 export default function Home() {
   
   const { user, error, isLoading } = useUser();
@@ -63,8 +64,11 @@ export default function Home() {
           console.log("this is the api res", res.data);
           console.log("this is the user email: ", user.email);
           console.log(user.email == res.data.email);
+          // String(res.data._id) and do local storage set item for user id
           if (res.data.email == user.email) {
-            console.log("you are loggedin")
+            console.log("you are loggedin");
+            localStorage.setItem("email", user.email);
+            // localStorage.setItem("userIDString", String(res.data._id));
             // router.push('/profile');
           }
         }
@@ -108,13 +112,14 @@ export default function Home() {
   
   return (
     <div>
-      <section class="container">
+      <PersistentDrawer />
+      <section className="container">
         <div id="col-1">
           <a href="/api/auth/login">Login</a>
           <br />
           <a href="/api/auth/logout">Logout</a>
 
-          <div class="header">
+          <div className="header">
             <h1>V.Scoop</h1>
             <p> Your daily virtual art museum digest </p>
             <p> Discover, distribute, and discuss </p>
