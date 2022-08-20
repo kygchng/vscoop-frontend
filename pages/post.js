@@ -136,7 +136,7 @@ export default function Post() {
 
         var userEmail = user.email;
         const userInfoRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${userEmail}`);
-        const userInfo = userInfoRes.data;
+        const userInfo = userInfoRes.data; 
 
         var commentBody = {};
         commentBody.post_id = String(post._id);
