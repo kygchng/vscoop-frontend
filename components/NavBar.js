@@ -96,7 +96,9 @@ export default function NavBar() {
 
       if(userDoc.is_admin) {
         setIsAdmin(true);
-      }
+      } 
+
+      //when admin user logs out, the button is still there -- when logs out, must unrender - set localStorage
     }
 
     getUser();
