@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useUser } from '@auth0/nextjs-auth0';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -18,7 +19,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import HomeIcon from '@mui/icons-material/Home';
+import ViewModuleIcon from '@mui/icons-material/ViewModule';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CreateIcon from '@mui/icons-material/Create';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import axios from 'axios';
+import { useRouter } from 'next/router';
+
 
 const drawerWidth = 240;
 
@@ -71,6 +78,8 @@ export default function NavBar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const { user, error, isLoading } = useUser();
+  const router = useRouter();
 
   // use effect
   // get item for local storage to get the user id
@@ -93,7 +102,6 @@ export default function NavBar() {
       });
       const userDoc = userRes.data;
       console.log("userDoc: ", userDoc);
-
       if(userDoc.is_admin) {
         setIsAdmin(true);
       } 
@@ -112,6 +120,21 @@ export default function NavBar() {
     setOpen(false);
   };
 
+  const checkUser = (room) => {
+    console.log("you clicked to check user");
+
+    if (user) {
+        console.log("you are loggied in ")
+    } else {
+        router.push("/api/auth/login")
+    }
+  }
+
+  const onMenuClickOpen = () => {
+    handleDrawerOpen();
+    checkUser();
+  }
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -120,7 +143,7 @@ export default function NavBar() {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={onMenuClickOpen}
             edge="start"
             sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
@@ -152,7 +175,7 @@ export default function NavBar() {
         <Divider />
         <List>
           <ListItem key="Home" disablePadding>
-            <ListItemButton>
+            <ListItemButton href="/">
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
@@ -162,7 +185,7 @@ export default function NavBar() {
           <ListItem key="Rooms" disablePadding>
             <ListItemButton href="/allrooms">
               <ListItemIcon>
-                <HomeIcon />
+                <ViewModuleIcon />
               </ListItemIcon>
               <ListItemText primary="Rooms" />
             </ListItemButton>
@@ -170,7 +193,7 @@ export default function NavBar() {
           <ListItem key="Profile" disablePadding>
             <ListItemButton href = "/profile">
               <ListItemIcon>
-                <InboxIcon />
+                <AccountCircleIcon />
               </ListItemIcon>
               <ListItemText primary="Profile" />
             </ListItemButton>
@@ -178,7 +201,7 @@ export default function NavBar() {
           <ListItem key="Create a Post" disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <InboxIcon />
+                <CreateIcon />
               </ListItemIcon>
               <ListItemText primary="Create a Post" />
             </ListItemButton>
@@ -199,7 +222,7 @@ export default function NavBar() {
           <ListItem key="Admin Tools" disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <InboxIcon />
+                <AdminPanelSettingsIcon />
               </ListItemIcon>
               <ListItemText primary="Admin Tools" />
             </ListItemButton>
