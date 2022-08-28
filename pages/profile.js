@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
-import PostCard from './PostCard';
+import PostCard from '../components/PostCard';
 
 export default function Profile () {
 
@@ -11,9 +11,9 @@ export default function Profile () {
   const [posts, setPosts] = useState([]);
 
   useEffect( () => {
-    var userEmail = localStorage.getItem("email");
+    var userID = localStorage.getItem("userIDString");
     const getUserInfo = async() => {
-      const userRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${userEmail}`).catch(function (error) {
+      const userRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/ID/${userID}`).catch(function (error) {
           if(error.response) {
             console.log("ignore");
           } else if (error.request) {
@@ -27,7 +27,6 @@ export default function Profile () {
       setUserInfo(userRes.data);
 
 
-      var userID = String(userRes.data._id);
       const postsRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/posts/user/${userID}`).catch(function(error) {
         if(error.response) {
           console.log("ignore");
@@ -38,11 +37,15 @@ export default function Profile () {
         }
       })
 
-      console.log("posts fetched by id: ", postsRes.data);
-      setPosts(postsRes.data);
+      if(postsRes) {
+        console.log("posts fetched by id: ", postsRes.data);
+        setPosts(postsRes.data);
+      }
+
+      
     }
 
-    if(userEmail) getUserInfo();
+    if(userID) getUserInfo();
 
     // const getPosts = async() => {
     //   var userID = String(userInfo._id);

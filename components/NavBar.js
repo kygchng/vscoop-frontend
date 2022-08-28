@@ -80,6 +80,7 @@ export default function NavBar() {
   const [isAdmin, setIsAdmin] = useState(false);
   const { user, error, isLoading } = useUser();
   const router = useRouter();
+  const [userID, setUserID] = useState("");
 
   // use effect
   // get item for local storage to get the user id
@@ -106,6 +107,7 @@ export default function NavBar() {
         setIsAdmin(true);
       } 
 
+      setUserID(String(userDoc._id));
       //when admin user logs out, the button is still there -- when logs out, must unrender - set localStorage
     }
 
@@ -134,6 +136,14 @@ export default function NavBar() {
     handleDrawerOpen();
     checkUser();
   }
+
+  const clickProfile = () => {
+    localStorage.setItem("userIDString", userID);
+    console.log(localStorage.getItem("userIDString"));
+    router.push("/profile");
+    router.reload();
+  }
+
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -175,7 +185,7 @@ export default function NavBar() {
         <Divider />
         <List>
           <ListItem key="Home" disablePadding>
-            <ListItemButton href="/">
+            <ListItemButton onClick = {() => router.push("/")}>
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
@@ -183,7 +193,7 @@ export default function NavBar() {
             </ListItemButton>
           </ListItem>
           <ListItem key="Rooms" disablePadding>
-            <ListItemButton href="/allrooms">
+            <ListItemButton onClick = {() => router.push("/allrooms")}>
               <ListItemIcon>
                 <ViewModuleIcon />
               </ListItemIcon>
@@ -191,7 +201,7 @@ export default function NavBar() {
             </ListItemButton>
           </ListItem>
           <ListItem key="Profile" disablePadding>
-            <ListItemButton href = "/profile">
+            <ListItemButton onClick = {clickProfile}>
               <ListItemIcon>
                 <AccountCircleIcon />
               </ListItemIcon>
@@ -199,7 +209,7 @@ export default function NavBar() {
             </ListItemButton>
           </ListItem>
           <ListItem key="Create a Post" disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick = {() => router.push("/createpost")}>
               <ListItemIcon>
                 <CreateIcon />
               </ListItemIcon>

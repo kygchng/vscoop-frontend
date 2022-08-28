@@ -29,6 +29,7 @@ export default function Post() {
     const [comments, setComments] = useState([]);
     const [content, setContent] = useState("placeholder");
     const [commentJSON, setCommentJSON] = useState(null);
+    const [userID, setUserID] = useState("");
     const router = useRouter();
 
     useEffect( () => {
@@ -48,6 +49,7 @@ export default function Post() {
             
             console.log("post fetched by id: ", postRes.data);
             setPost(postRes.data);
+            setUserID(postRes.data.user_id);
         }
     
         getPost();
@@ -193,12 +195,16 @@ export default function Post() {
 
     }
 
+    const postCreatorClick = () => {
+      localStorage.setItem("userIDString", userID);
+      router.push("/profile");
+    }
 
 
     return (
         <div>
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-              <Stack spacing = {2}>
+              <Stack spacing = {2} onClick = {postCreatorClick}>
                   {post && <img src = {post.avatarImage} alt = "avatar" width = "50" height = "50"/>}
                   {post && <h3> {post.username} </h3>}
                   {post && <img src={post.picture} alt="post picture" />}

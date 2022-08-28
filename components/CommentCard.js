@@ -1,9 +1,10 @@
-import * as React from 'react';
+import react from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
+import { useRouter } from 'next/router';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -13,6 +14,14 @@ const Img = styled('img')({
 });
 
 const CommentCard=({comment}) => {
+
+  const router = useRouter();
+
+  const commentAvatarClick = () => {
+    localStorage.setItem("userIDString", comment.user_id);
+    router.push("/profile");
+  }
+
   return (
     <Paper
       sx={{
@@ -27,7 +36,7 @@ const CommentCard=({comment}) => {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="complex" src={comment.avatarImage} />
+            <Img alt="complex" src={comment.avatarImage} onClick = {commentAvatarClick}/>
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>

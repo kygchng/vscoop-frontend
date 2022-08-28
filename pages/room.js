@@ -3,7 +3,7 @@ import { useUser } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
 import axios from 'axios'
 import Grid from '@mui/material/Grid';
-import PostCard from './PostCard';
+import PostCard from '../components/PostCard';
 
 export default function Room() {
   

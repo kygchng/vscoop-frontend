@@ -67,7 +67,7 @@ export default function Home() {
           // String(res.data._id) and do local storage set item for user id
           if (res.data.email == user.email) {
             console.log("you are loggedin");
-            localStorage.setItem("email", user.email);
+            localStorage.setItem("userIDString", String(res.data._id));
             // localStorage.setItem("userIDString", String(res.data._id));
             // router.push('/profile');
           }
