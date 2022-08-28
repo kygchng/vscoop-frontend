@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core';
+import date from 'date-and-time';
 
 const useStyles = makeStyles({
   field: {
@@ -63,10 +64,32 @@ export default function Post() {
               });
             
             console.log("comments fetched by id: ", commentsRes.data);
-            setComments(commentsRes.data);
+
+
+            const datedComments = commentsRes.data.map(obj => {
+              return {...obj, timestamp: date.parse(obj.timestamp, 'YYYY/MM/DD HH:mm:ss')}
+            })
+
+            console.log("presort, date parse", datedComments);
+
+            const sortedCommentsDesc = datedComments.sort(
+              (objA, objB) => Number(objB.timestamp) - Number(objA.timestamp),
+            );
+
+            console.log("sorted comments desc: ", sortedCommentsDesc);
+
+            const stringedComments = sortedCommentsDesc.map(obj => {
+              return {...obj, timestamp: date.format(obj.timestamp, 'YYYY/MM/DD HH:mm:ss')}
+            })
+
+            console.log("final", stringedComments);
+            // setComments(commentsRes.data);
+            setComments(stringedComments);
         }
 
         getComments();
+
+
 
         // const getCommentUsernames = async() => {
         //   console.log("made it in getCommentUsernames");
@@ -138,13 +161,15 @@ export default function Post() {
         const userInfoRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${userEmail}`);
         const userInfo = userInfoRes.data; 
 
+        const now = new Date();
+
         var commentBody = {};
         commentBody.post_id = String(post._id);
         commentBody.user_id = String(userInfo._id);
         commentBody.username = userInfo.username;
         commentBody.avatarImage = userInfo.profile_picture;
         commentBody.text = contentRef.current.value;
-        commentBody.timestamp = "11:40AM 8/14/2022"; // to be changed
+        commentBody.timestamp = date.format(now, 'YYYY/MM/DD HH:mm:ss'); // to be changed
 
 
         await axios.post('http://localhost:4000/api/v1/consumer/create/comment', commentBody)
