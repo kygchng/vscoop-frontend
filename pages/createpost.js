@@ -5,7 +5,7 @@ import { useUser } from '@auth0/nextjs-auth0';
 export default function CreatePost() {
   
     const { user, error, isLoading } = useUser();
-    const [userInfo, setUserInfo] = userState(null);
+    const [userInfo, setUserInfo] = useState(null);
 
     useEffect( () => {
         const getUser = async(user) => {

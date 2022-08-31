@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
-import axios from 'axios';
+
 import CommentCard from "../components/CommentCard";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -9,6 +9,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core';
 import date from 'date-and-time';
+import ToggleButton from '@mui/material/ToggleButton';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import axios from 'axios';
 
 const useStyles = makeStyles({
   field: {
@@ -29,7 +33,10 @@ export default function Post() {
     const [comments, setComments] = useState([]);
     const [content, setContent] = useState("placeholder");
     const [commentJSON, setCommentJSON] = useState(null);
-    const [userID, setUserID] = useState("");
+    const [selected, setSelected] = useState(false);
+    const [postUserID, setPostUserID] = useState("");
+    const [userInfoID, setUserInfoID] = useState("");
+    const [likes, setLikes] = useState(0);
     const router = useRouter();
 
     useEffect( () => {
@@ -49,7 +56,7 @@ export default function Post() {
             
             console.log("post fetched by id: ", postRes.data);
             setPost(postRes.data);
-            setUserID(postRes.data.user_id);
+            setPostUserID(postRes.data.user_id);
         }
     
         getPost();
@@ -118,6 +125,35 @@ export default function Post() {
         // }
 
         // getCommentUsernames();
+
+
+
+
+
+        const getUser = async(user) => {
+
+          if (user) {
+            const email = user.email;
+    
+    
+            const res = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${email}`).catch(function (error) {
+              if(error.response) {
+                console.log("email is not in api");
+                router.push("/signup");
+              } else if (error.request) {
+                console.log("ignore");
+              } else {
+                console.log("ignore too");
+              }
+            });
+    
+            setUserInfoID(String(res.data._id));
+           
+          }
+      }
+        
+        getUser(user);
+
         
     }, [commentJSON])
 
@@ -196,18 +232,67 @@ export default function Post() {
     }
 
     const postCreatorClick = () => {
-      localStorage.setItem("userIDString", userID);
+      localStorage.setItem("userIDString", postUserID);
       router.push("/profile");
     }
 
+    const addLike = async() => {
+      const postID = String(post._id);
+      await axios.put(`http://localhost:4000/api/v1/consumer/increase/likes/${postID}/${userInfoID}`).catch(function (error) {
+                if(error.response) {
+                  console.log("ignore");
+                } else if (error.request) {
+                  console.log("ignore");
+                } else {
+                  console.log("ignore too");
+                }
+      });
+
+      setLikes(likes + 1);
+      console.log(post);
+    }
+
+    const removeLike = async() => {
+      const postID = String(post._id);
+      await axios.put(`http://localhost:4000/api/v1/consumer/decrease/likes/${postID}/${userInfoID}`).catch(function (error) {
+                if(error.response) {
+                  console.log("ignore");
+                } else if (error.request) {
+                  console.log("ignore");
+                } else {
+                  console.log("ignore too");
+                }
+      });
+
+      setLikes(likes - 1);
+      console.log(post);
+    }
 
     return (
         <div>
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-              <Stack spacing = {2} onClick = {postCreatorClick}>
+              <Stack spacing = {2}>
+                <div  onClick = {postCreatorClick}>
                   {post && <img src = {post.avatarImage} alt = "avatar" width = "50" height = "50"/>}
                   {post && <h3> {post.username} </h3>}
+                </div>
                   {post && <img src={post.picture} alt="post picture" />}
+                  <ToggleButton
+                    value="check"
+                    selected={selected}
+                    onChange={() => {
+                      if(selected) {
+                        removeLike();
+                      } else {
+                        addLike();
+                      }
+                      setSelected(!selected);
+                    }}
+                  >
+
+                    {{selected} == true ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                  </ToggleButton>
+                  <p> {likes} Likes </p>
                   {post && <h1> {post.title} </h1>}
                   {post && <p> {post.description} </p>}
 
