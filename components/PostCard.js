@@ -50,6 +50,10 @@ export default function ActionAreaCard({post}) {
             setCreator(creatorRes.data);
         }
         getCreator();
+
+        if(user) {
+          localStorage.setItem("userEmailForPost", user.email);
+        }
     }, [])
 
     const getId = () => {

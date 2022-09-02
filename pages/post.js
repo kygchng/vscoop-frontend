@@ -132,8 +132,7 @@ export default function Post() {
 
         const getUser = async(user) => {
 
-          if (user) {
-            const email = user.email;
+            const email = localStorage.getItem("userEmailForPost");
     
     
             const res = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${email}`).catch(function (error) {
@@ -149,13 +148,12 @@ export default function Post() {
     
             setUserInfoID(String(res.data._id));
            
-          }
-      }
+        }
         
         getUser(user);
 
-        
-    }, [commentJSON])
+
+    }, [commentJSON]) //post
 
     // const getUsername = async() => {
     //     console.log("made it in getUsername");
@@ -236,9 +234,43 @@ export default function Post() {
       router.push("/profile");
     }
 
-    const addLike = async() => {
+    // const addLike = async() => {
+    //   const postID = String(post._id);
+    //   await axios.put(`http://localhost:4000/api/v1/consumer/increase/likes/${postID}/${userInfoID}`).catch(function (error) {
+    //             if(error.response) {
+    //               console.log("ignore");
+    //             } else if (error.request) {
+    //               console.log("ignore");
+    //             } else {
+    //               console.log("ignore too");
+    //             }
+    //   });
+
+    //   setLikes(likes + 1);
+    //   console.log(post);
+    // }
+
+    // const removeLike = async() => {
+    //   const postID = String(post._id);
+    //   await axios.put(`http://localhost:4000/api/v1/consumer/decrease/likes/${postID}/${userInfoID}`).catch(function (error) {
+    //             if(error.response) {
+    //               console.log("ignore");
+    //             } else if (error.request) {
+    //               console.log("ignore");
+    //             } else {
+    //               console.log("ignore too");
+    //             }
+    //   });
+
+    //   setLikes(likes - 1);
+    //   console.log(post);
+    // }
+
+    const like = async() => {
       const postID = String(post._id);
-      await axios.put(`http://localhost:4000/api/v1/consumer/increase/likes/${postID}/${userInfoID}`).catch(function (error) {
+      console.log("postID", postID);
+      console.log("userInfoID: ", userInfoID);
+      const updatedPost = await axios.put(`http://localhost:4000/api/v1/consumer/like/post/${postID}/${userInfoID}`).catch(function (error) {
                 if(error.response) {
                   console.log("ignore");
                 } else if (error.request) {
@@ -248,24 +280,9 @@ export default function Post() {
                 }
       });
 
-      setLikes(likes + 1);
-      console.log(post);
-    }
-
-    const removeLike = async() => {
-      const postID = String(post._id);
-      await axios.put(`http://localhost:4000/api/v1/consumer/decrease/likes/${postID}/${userInfoID}`).catch(function (error) {
-                if(error.response) {
-                  console.log("ignore");
-                } else if (error.request) {
-                  console.log("ignore");
-                } else {
-                  console.log("ignore too");
-                }
-      });
-
-      setLikes(likes - 1);
-      console.log(post);
+      // setLikes(updatedPost.data.likes.length);
+      console.log("updatedPost: ", updatedPost.data);
+      setPost(updatedPost.data);
     }
 
     return (
@@ -281,18 +298,14 @@ export default function Post() {
                     value="check"
                     selected={selected}
                     onChange={() => {
-                      if(selected) {
-                        removeLike();
-                      } else {
-                        addLike();
-                      }
                       setSelected(!selected);
+                      like();
                     }}
                   >
 
-                    {{selected} == true ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                    {selected == true ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                   </ToggleButton>
-                  <p> {likes} Likes </p>
+                  {post ? <p> {post.likes.length} Likes </p> : null}
                   {post && <h1> {post.title} </h1>}
                   {post && <p> {post.description} </p>}
 

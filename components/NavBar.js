@@ -138,10 +138,12 @@ export default function NavBar() {
   }
 
   const clickProfile = () => {
+    console.log("MEOWWWWWWW")
     localStorage.setItem("userIDString", userID);
     console.log(localStorage.getItem("userIDString"));
+    console.log("i clicked profile");
     router.push("/profile");
-    router.reload();
+    //router.reload();
   }
 
 
