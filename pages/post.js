@@ -3,6 +3,7 @@ import { useUser } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
 
 import CommentCard from "../components/CommentCard";
+import LikeButtonPost from "../components/LikeButtonPost";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
@@ -146,7 +147,7 @@ export default function Post() {
               }
             });
     
-            setUserInfoID(String(res.data._id));
+            setUserInfoID(res.data._id);
            
         }
         
@@ -206,6 +207,7 @@ export default function Post() {
         commentBody.avatarImage = userInfo.profile_picture;
         commentBody.text = contentRef.current.value;
         commentBody.timestamp = date.format(now, 'YYYY/MM/DD HH:mm:ss'); // to be changed
+        commentBody.likes = [];
 
 
         await axios.post('http://localhost:4000/api/v1/consumer/create/comment', commentBody)
@@ -266,24 +268,25 @@ export default function Post() {
     //   console.log(post);
     // }
 
-    const like = async() => {
-      const postID = String(post._id);
-      console.log("postID", postID);
-      console.log("userInfoID: ", userInfoID);
-      const updatedPost = await axios.put(`http://localhost:4000/api/v1/consumer/like/post/${postID}/${userInfoID}`).catch(function (error) {
-                if(error.response) {
-                  console.log("ignore");
-                } else if (error.request) {
-                  console.log("ignore");
-                } else {
-                  console.log("ignore too");
-                }
-      });
+    //INSIDE LIKEBUTTON COMPONENT
+    // const like = async() => {
+    //   const postID = String(post._id);
+    //   console.log("postID", postID);
+    //   console.log("userInfoID: ", userInfoID);
+    //   const updatedPost = await axios.put(`http://localhost:4000/api/v1/consumer/like/post/${postID}/${userInfoID}`).catch(function (error) {
+    //             if(error.response) {
+    //               console.log("ignore");
+    //             } else if (error.request) {
+    //               console.log("ignore");
+    //             } else {
+    //               console.log("ignore too");
+    //             }
+    //   });
 
-      // setLikes(updatedPost.data.likes.length);
-      console.log("updatedPost: ", updatedPost.data);
-      setPost(updatedPost.data);
-    }
+    //   // setLikes(updatedPost.data.likes.length);
+    //   console.log("updatedPost: ", updatedPost.data);
+    //   setPost(updatedPost.data);
+    // }
 
     return (
         <div>
@@ -294,18 +297,8 @@ export default function Post() {
                   {post && <h3> {post.username} </h3>}
                 </div>
                   {post && <img src={post.picture} alt="post picture" />}
-                  <ToggleButton
-                    value="check"
-                    selected={selected}
-                    onChange={() => {
-                      setSelected(!selected);
-                      like();
-                    }}
-                  >
-
-                    {selected == true ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                  </ToggleButton>
-                  {post ? <p> {post.likes.length} Likes </p> : null}
+                  
+                  <LikeButtonPost userID = {userInfoID} />
                   {post && <h1> {post.title} </h1>}
                   {post && <p> {post.description} </p>}
 

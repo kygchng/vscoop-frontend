@@ -6,10 +6,8 @@ import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import { useRouter } from 'next/router';
 import { useUser } from '@auth0/nextjs-auth0';
-import ToggleButton from '@mui/material/ToggleButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import axios from 'axios';
+import LikeButtonComment from "./LikeButtonComment";
 
 const Img = styled('img')({
   margin: 'auto',
@@ -21,8 +19,6 @@ const Img = styled('img')({
 const CommentCard=({comment}) => {
 
   const router = useRouter();
-  const [selected, setSelected] = useState(false);
-  const [likes, setLikes] = useState(0);
   const { user, error, isLoading } = useUser();
   const [userInfoID, setUserInfoID] = useState("");
 
@@ -31,33 +27,24 @@ const CommentCard=({comment}) => {
 
     const getUser = async(user) => {
 
-      if (user) {
-        const email = user.email;
+      const email = localStorage.getItem("userEmailForPost");
 
 
-        const res = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${email}`).catch(function (error) {
-          if(error.response) {
-            console.log("email is not in api");
-            router.push("/signup");
-          } else if (error.request) {
-            console.log("ignore");
-          } else {
-            console.log("ignore too");
-          }
-        });
-
-
-        if(res) {
-          console.log(user.email == res.data.email);
-          // String(res.data._id) and do local storage set item for user id
-          if (res.data.email == user.email) {
-            setUserInfoID(String(res.data._id));
-            console.log("userinfoid", userInfoID);
-          }
+      const res = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${email}`).catch(function (error) {
+        if(error.response) {
+          console.log("email is not in api");
+          router.push("/signup");
+        } else if (error.request) {
+          console.log("ignore");
+        } else {
+          console.log("ignore too");
         }
-      }
-  }
-    
+      });
+
+      setUserInfoID(res.data._id);
+     
+    }
+  
     getUser(user);
 
 
@@ -95,6 +82,9 @@ const CommentCard=({comment}) => {
                 {comment.text}
               </Typography>
             </Grid>
+            
+            <LikeButtonComment userID = {userInfoID} commentInitial = {comment}/>
+
             <Grid item>
               <Typography sx={{ cursor: 'pointer' }} variant="body2">
                 {comment.timestamp}
