@@ -17,40 +17,50 @@ const LikeButtonComment=({userID, commentInitial}) => {
   const { user, error, isLoading } = useUser();
 //   const [userInfoID, setUserInfoID] = useState("");
   const [comment, setComment] = useState(null);
+  const [commentId, setCommentId] = useState(null);
 
   useEffect( () => {
     setComment(commentInitial);
+    setCommentId(commentInitial._id);
     console.log("comment user ID", userID);
 
-    if(comment) {
-        if(comment.likes.includes(userID)) {
-            console.log("comment likes includes");
-            setSelected(true);
-        }
-    }
+    // if(comment) {
+    //     if(comment.likes.includes(userID)) {
+    //         console.log("comment likes includes");
+    //         setSelected(true);
+    //     }
+    // }
     
   }, [])
 
   const like = async() => {
-    const commentID = String(comment._id);
-    // const userIDString = String(userID);
-    // console.log("userInfoID: ", userInfoID);
-    const updatedComment = await axios.put(`http://localhost:4000/api/v1/consumer/like/comment/${commentID}/${userID}`).catch(function (error) {
-              if(error.response) {
-                console.log("ignore");
-              } else if (error.request) {
-                console.log("ignore");
-              } else {
-                console.log("ignore too");
-              }
-    });
-
-    // setLikes(updatedPost.data.likes.length);
-    console.log("updatedComment: ", updatedComment.data);
-    setComment(updatedComment.data);
-
-    setSelected(comment.likes.includes(userID));
-    console.log("selected", selected);
+    if(comment) {
+        console.log("====================================================================");
+        console.log("i am inside of the comment if statement ");
+        console.log("comment: ", comment);
+        const commentID = String(commentId);
+        console.log("comment id : ", commentID);
+        console.log("====================================================================");
+        // const userIDString = String(userID);
+        // console.log("userInfoID: ", userInfoID);
+        const updatedComment = await axios.put(`http://localhost:4000/api/v1/consumer/like/comment/${commentID}/${userID}`).catch(function (error) {
+                  if(error.response) {
+                    console.log("ignore");
+                  } else if (error.request) {
+                    console.log("ignore");
+                  } else {
+                    console.log("ignore too");
+                  }
+        });
+    
+        // setLikes(updatedPost.data.likes.length);
+        console.log("updatedComment: ", updatedComment.data);
+        setComment(updatedComment.data);
+    
+        setSelected(comment.likes.includes(userID));
+        console.log("selected", selected);
+    }
+    
   }
 
   //note: selected == false, render filled in heart
