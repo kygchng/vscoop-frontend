@@ -232,7 +232,7 @@ export default function NavBar() {
         {isAdmin && <Divider />}
         {isAdmin && <List>
           <ListItem key="Admin Tools" disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick = {() => router.push("/admin")}>
               <ListItemIcon>
                 <AdminPanelSettingsIcon />
               </ListItemIcon>

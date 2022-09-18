@@ -21,7 +21,7 @@ const Img = styled('img')({
   });
   
 
-export default function PostCard({post}) {
+export default function AdminPostCard({post}) {
 
     const { user, error, isLoading } = useUser();
     const router = useRouter();
@@ -60,7 +60,7 @@ export default function PostCard({post}) {
       var postIdStr = String(post._id)
       localStorage.setItem('postIdStr', postIdStr);
       console.log("saved post id: ", postIdStr);
-      router.push("/post");
+      router.push("/approvepost");
     }
 
     return (
