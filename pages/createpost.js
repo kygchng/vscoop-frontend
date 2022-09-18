@@ -12,6 +12,9 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core';
 import date from 'date-and-time';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 const useStyles = makeStyles({
@@ -32,6 +35,9 @@ export default function CreatePost({sortedRooms}) {
     const [userInfo, setUserInfo] = useState(null);
     const [roomID, setRoomID] = useState("");
     const router = useRouter();
+
+    const [open, setOpen] = useState(false); //snackbar
+    const [message, setMessage] = useState("");
 
     useEffect( () => {
         const getUser = async() => {
@@ -125,7 +131,16 @@ export default function CreatePost({sortedRooms}) {
                 
             localStorage.setItem("userEmailForPost", userInfo.email);
             router.push("/post");
-            }
+            } 
+
+
+            //snackbar saying post has been created -- THIS DOESN'T WORK CUZ WE WENT TO A DIFF PAGE
+            setOpen(true);
+            setMessage("Success! Post created.");
+        } else {
+            //implement snackbar - saying some fields are not filled
+            setOpen(true);
+            setMessage("Imcomplete fields.");
         }
   
         // {
@@ -138,6 +153,35 @@ export default function CreatePost({sortedRooms}) {
         // }
   
       }
+
+
+      //snackbar stuff
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+
+        setOpen(false);
+    };
+
+    const action = (
+        <React.Fragment>
+        <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+        >
+            <CloseIcon fontSize="small" />
+        </IconButton>
+        </React.Fragment>
+    );
+
+
 
       return (
         <div>
@@ -197,9 +241,17 @@ export default function CreatePost({sortedRooms}) {
                     type="submit"
                     color="secondary"
                     variant="contained"
+                    onClick = {handleSubmit}
                 >
                     Submit
                 </Button>
+                <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    message={message}
+                    action={action}
+                />
             </form>
             
         </div>
@@ -233,3 +285,11 @@ export async function getServerSideProps() {
     props: {sortedRooms}
   }
 }
+
+
+
+
+
+
+
+
