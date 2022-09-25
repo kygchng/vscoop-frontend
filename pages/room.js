@@ -37,7 +37,7 @@ export default function Room() {
         let postsRes=null;
 
         try{
-            postsRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/posts/${roomJSONIdStr}`)
+            postsRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/approved/posts/${roomJSONIdStr}`)
             setPosts(postsRes.data);
         } catch (err) {
             console.error("error response");

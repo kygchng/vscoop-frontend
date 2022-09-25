@@ -55,11 +55,22 @@ const postCreatorClick = () => {
         }
       });
     //push to admin tools page
-    router.push("/admin");
+    localStorage.setItem("roomIdStr", String(post.room_id))
+    router.push("/room");
   }
 
-  const denyPostCall = () => {
+  const denyPostCall = async() => {
     //send an email to the person
+    const postJSONIdStr = localStorage.getItem("postIdStr");
+    await axios.delete(`http://localhost:4000/api/v1/consumer/delete/post/${postJSONIdStr}`).catch(function (error) {
+        if(error.response) {
+          console.log("ignore");
+        } else if (error.request) {
+          console.log("ignore");
+        } else {
+          console.log("ignore too");
+        }
+      });
     //push to admin tools page
     router.push("/admin");
   }
