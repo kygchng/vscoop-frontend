@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios'
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 export default function ApprovePost() {
   
@@ -40,6 +41,28 @@ const postCreatorClick = () => {
     router.push("/profile");
   }
   
+
+  const approvePostCall = async() => {
+    //api call to approve post
+    const postJSONIdStr = localStorage.getItem("postIdStr");
+    await axios.put(`http://localhost:4000/api/v1/consumer/approve/post/${postJSONIdStr}`).catch(function (error) {
+        if(error.response) {
+          console.log("ignore");
+        } else if (error.request) {
+          console.log("ignore");
+        } else {
+          console.log("ignore too");
+        }
+      });
+    //push to admin tools page
+    router.push("/admin");
+  }
+
+  const denyPostCall = () => {
+    //send an email to the person
+    //push to admin tools page
+    router.push("/admin");
+  }
   return (
     <div>
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
@@ -53,7 +76,17 @@ const postCreatorClick = () => {
                   {post && <h1> {post.title} </h1>}
                   {post && <p> {post.description} </p>}
 
+                <br />
+                <Stack direction="row" spacing={2}>
+                    <Button variant="contained" color="success" onClick = {approvePostCall}>
+                        APPROVE
+                    </Button>
+                    <Button variant="outlined" color="error" onClick = {denyPostCall}>
+                        DENY
+                    </Button>
+                </Stack>
               </Stack>
+              
             </Box>
     </div>
     
