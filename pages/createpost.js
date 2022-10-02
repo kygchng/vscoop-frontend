@@ -15,8 +15,8 @@ import date from 'date-and-time';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-// import S3 from "react-aws-s3"; //layer built on top of sdk - not actual aws npm
-import UploadImagePost from '../components/UploadImagePost';
+//import UploadImagePost from '../components/UploadImagePost';
+import { UploadToS3 } from 'react-upload-to-s3'
 
 const useStyles = makeStyles({
     field: {
@@ -27,23 +27,11 @@ const useStyles = makeStyles({
   })
 
 
-// const config = {
-//     bucketName: 'vscoop-bucket',
-//     dirName: 'post-media', /* optional */
-//     region: 'us-west-1',
-//     accessKeyId: 'AKIAQCFG5Q36WEVQ3332',
-//     secretAccessKey: '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',
-// }
-
 
 
 export default function CreatePost({sortedRooms}) {
-    // const ReactS3Client = new S3(config);
-    // const [images, setImages] = useState([]);
-
     const classes = useStyles()
     const titleRef = useRef();
-    const pictureRef = useRef(); //temporary
     const descriptionRef = useRef();
 
     const { user, error, isLoading } = useUser();
@@ -53,6 +41,8 @@ export default function CreatePost({sortedRooms}) {
 
     const [open, setOpen] = useState(false); //snackbar
     const [message, setMessage] = useState("");
+
+    const [s3Image, setS3Image] = useState("");
 
 
     useEffect( () => {
@@ -112,21 +102,20 @@ export default function CreatePost({sortedRooms}) {
         e.preventDefault();
   
         console.log(titleRef.current.value);
-        console.log(pictureRef.current.value);
         console.log(descriptionRef.current.value);
         console.log(userInfo);
         console.log(roomID);
   
   
-        for (let i = 0; i < images.length; i++) {
-            handleUpload(images[i], ReactS3Client);
-        }
-
-        if(titleRef.current.value && pictureRef.current.value && descriptionRef.current.value && userInfo && roomID) { {
+        if(titleRef.current.value && descriptionRef.current.value && userInfo && roomID) { {
             console.log("made it in to submit");
             const now = new Date();
   
             var postBody = {};
+
+            var imageName = s3Image.substring(s3Image.indexOf("/") + 1);
+            var s3URL = `https://vscoop-uploads.s3.us-west-1.amazonaws.com/${imageName}`;
+            console.log("s3URL, ", s3URL);
 
             postBody.user_id = String(userInfo._id),
             postBody.username = userInfo.username,
@@ -134,7 +123,7 @@ export default function CreatePost({sortedRooms}) {
             postBody.room_id = roomID, // → post.find(room_id)
             postBody.title = titleRef.current.value,
             postBody.description = descriptionRef.current.value,
-            postBody.picture = pictureRef.current.value, // (link)
+            postBody.picture = s3URL, // (link)
             postBody.likes = [], // of user ObjectIds
             //comments: Array, // of comment ObjectIds
             postBody.timestamp = date.format(now, 'YYYY/MM/DD HH:mm:ss'),
@@ -149,8 +138,8 @@ export default function CreatePost({sortedRooms}) {
                 .catch(error => {
                 })
                 
-            localStorage.setItem("userEmailForPost", userInfo.email);
-            router.push("/post");
+            // localStorage.setItem("userEmailForPost", userInfo.email);
+            router.push("/postconfirmation");
             } 
 
 
@@ -174,25 +163,6 @@ export default function CreatePost({sortedRooms}) {
   
       }
 
-
-    // const handleUpload = (image, ReactS3Client) => {
-    //     // var test = fs.readFileSync(image.name);
-    //     // console.log("fileContent: ", test);
-
-    //     console.log("Reacts3Client: ", ReactS3Client);
-    //     console.log("images: ", images);
-    //     console.log("image param: ", image);
-    //     ReactS3Client.uploadFile(image, image.name).then((data) => {
-    //         console.log(data);
-    //         if (data.status === 204) {
-    //             console.log("success"); //uploaded to bucket
-    //         } else {
-    //             console.log("fail");
-    //         }
-    //     }).catch(rejected => {
-    //         console.log("error: ", rejected);
-    //     });
-    // };
 
 
       //snackbar stuff
@@ -221,22 +191,6 @@ export default function CreatePost({sortedRooms}) {
         </React.Fragment>
     );
 
-    // const fileHandler = (event) => {
-    //     let fileObj = [];
-    //     let fileArray = [];
-
-    //     if (event.target.files.length) {
-    //         fileObj.push(event.target.files);
-    //         for (let i = 0; i < fileObj[0].length; i++) {
-    //             console.log(URL.createObjectURL(fileObj[0][i]));
-    //             fileArray.push(URL.createObjectURL(fileObj[0][i]));
-    //         }
-    //         setImages(event.target.files);
-    //     }
-
-    //     console.log("fileObj: ", fileObj);
-    //     console.log(event.target.files);
-    // };
 
       return (
         <div>
@@ -272,7 +226,17 @@ export default function CreatePost({sortedRooms}) {
                 </Box>
 
                
-                <UploadImagePost />
+                <UploadToS3 
+                    bucket="vscoop-uploads"
+                    awsRegion="us-west-1"
+                    awsKey="AKIAQCFG5Q36VLMG6HOS"
+                    awsSecret="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"
+                    type="image"
+                    showNewUpload={false}
+                    onResult={(result) => {
+                        console.log('on Result', result);
+                        setS3Image(result.url);
+                    }} />
 
                 <br />
                 <TextField
@@ -337,37 +301,3 @@ export async function getServerSideProps() {
   }
 }
 
-
-
-
-
-
-
-/* old s3 npm 
-                <TextField 
-                    inputRef = {pictureRef}
-                    type = "text"
-                    label = "Upload an Image"
-                    id="outlined-basic" 
-                    variant="outlined" />
-                <br />
-                <br />
-
-                <label htmlFor="upload">
-                    <div>
-                        <div>
-                            Upload image(s)
-                        </div>
-                    </div>
-                </label>
-                <input
-                    type="file"
-                    multiple={true}
-                    id="upload"
-                    onChange={fileHandler}
-                    style={{ display: "none" }}
-                />
-                <div>
-                    {`${images.length} image(s) ready to be uploaded`}
-                </div>
-*/
