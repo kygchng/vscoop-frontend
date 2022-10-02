@@ -15,7 +15,8 @@ import date from 'date-and-time';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import S3 from "react-aws-s3"; //layer built on top of sdk - not actual aws npm
+// import S3 from "react-aws-s3"; //layer built on top of sdk - not actual aws npm
+import UploadImagePost from '../components/UploadImagePost';
 
 const useStyles = makeStyles({
     field: {
@@ -26,19 +27,19 @@ const useStyles = makeStyles({
   })
 
 
-const config = {
-    bucketName: 'vscoop-bucket',
-    dirName: 'post-media', /* optional */
-    region: 'us-west-1',
-    accessKeyId: 'AKIAQCFG5Q36WEVQ3332',
-    secretAccessKey: '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',
-}
+// const config = {
+//     bucketName: 'vscoop-bucket',
+//     dirName: 'post-media', /* optional */
+//     region: 'us-west-1',
+//     accessKeyId: 'AKIAQCFG5Q36WEVQ3332',
+//     secretAccessKey: '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',
+// }
 
 
 
 export default function CreatePost({sortedRooms}) {
-    const ReactS3Client = new S3(config);
-    const [images, setImages] = useState([]);
+    // const ReactS3Client = new S3(config);
+    // const [images, setImages] = useState([]);
 
     const classes = useStyles()
     const titleRef = useRef();
@@ -174,24 +175,24 @@ export default function CreatePost({sortedRooms}) {
       }
 
 
-    const handleUpload = (image, ReactS3Client) => {
-        // var test = fs.readFileSync(image.name);
-        // console.log("fileContent: ", test);
+    // const handleUpload = (image, ReactS3Client) => {
+    //     // var test = fs.readFileSync(image.name);
+    //     // console.log("fileContent: ", test);
 
-        console.log("Reacts3Client: ", ReactS3Client);
-        console.log("images: ", images);
-        console.log("image param: ", image);
-        ReactS3Client.uploadFile(image, image.name).then((data) => {
-            console.log(data);
-            if (data.status === 204) {
-                console.log("success"); //uploaded to bucket
-            } else {
-                console.log("fail");
-            }
-        }).catch(rejected => {
-            console.log("error: ", rejected);
-        });
-    };
+    //     console.log("Reacts3Client: ", ReactS3Client);
+    //     console.log("images: ", images);
+    //     console.log("image param: ", image);
+    //     ReactS3Client.uploadFile(image, image.name).then((data) => {
+    //         console.log(data);
+    //         if (data.status === 204) {
+    //             console.log("success"); //uploaded to bucket
+    //         } else {
+    //             console.log("fail");
+    //         }
+    //     }).catch(rejected => {
+    //         console.log("error: ", rejected);
+    //     });
+    // };
 
 
       //snackbar stuff
@@ -220,22 +221,22 @@ export default function CreatePost({sortedRooms}) {
         </React.Fragment>
     );
 
-    const fileHandler = (event) => {
-        let fileObj = [];
-        let fileArray = [];
+    // const fileHandler = (event) => {
+    //     let fileObj = [];
+    //     let fileArray = [];
 
-        if (event.target.files.length) {
-            fileObj.push(event.target.files);
-            for (let i = 0; i < fileObj[0].length; i++) {
-                console.log(URL.createObjectURL(fileObj[0][i]));
-                fileArray.push(URL.createObjectURL(fileObj[0][i]));
-            }
-            setImages(event.target.files);
-        }
+    //     if (event.target.files.length) {
+    //         fileObj.push(event.target.files);
+    //         for (let i = 0; i < fileObj[0].length; i++) {
+    //             console.log(URL.createObjectURL(fileObj[0][i]));
+    //             fileArray.push(URL.createObjectURL(fileObj[0][i]));
+    //         }
+    //         setImages(event.target.files);
+    //     }
 
-        console.log("fileObj: ", fileObj);
-        console.log(event.target.files);
-    };
+    //     console.log("fileObj: ", fileObj);
+    //     console.log(event.target.files);
+    // };
 
       return (
         <div>
@@ -252,32 +253,7 @@ export default function CreatePost({sortedRooms}) {
                 <br />
                 <br />
 
-                <TextField 
-                    inputRef = {pictureRef}
-                    type = "text"
-                    label = "Upload an Image"
-                    id="outlined-basic" 
-                    variant="outlined" />
-                <br />
-                <br />
-
-                <label htmlFor="upload">
-                    <div>
-                        <div>
-                            Upload image(s)
-                        </div>
-                    </div>
-                </label>
-                <input
-                    type="file"
-                    multiple={true}
-                    id="upload"
-                    onChange={fileHandler}
-                    style={{ display: "none" }}
-                />
-                <div>
-                    {`${images.length} image(s) ready to be uploaded`}
-                </div>
+                
 
                 <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
@@ -294,6 +270,9 @@ export default function CreatePost({sortedRooms}) {
                         </Select>
                     </FormControl>
                 </Box>
+
+               
+                <UploadImagePost />
 
                 <br />
                 <TextField
@@ -364,4 +343,31 @@ export async function getServerSideProps() {
 
 
 
+/* old s3 npm 
+                <TextField 
+                    inputRef = {pictureRef}
+                    type = "text"
+                    label = "Upload an Image"
+                    id="outlined-basic" 
+                    variant="outlined" />
+                <br />
+                <br />
 
+                <label htmlFor="upload">
+                    <div>
+                        <div>
+                            Upload image(s)
+                        </div>
+                    </div>
+                </label>
+                <input
+                    type="file"
+                    multiple={true}
+                    id="upload"
+                    onChange={fileHandler}
+                    style={{ display: "none" }}
+                />
+                <div>
+                    {`${images.length} image(s) ready to be uploaded`}
+                </div>
+*/
