@@ -126,7 +126,7 @@ export default function CreatePost({sortedRooms}) {
             postBody.picture = s3URL, // (link)
             postBody.likes = [], // of user ObjectIds
             //comments: Array, // of comment ObjectIds
-            postBody.timestamp = date.format(now, 'YYYY/MM/DD HH:mm:ss'),
+            postBody.timestamp = date.format(now, 'YYYY/MM/DD HH:mm:ss'), //date to string
             postBody.is_approved = false;
     
     

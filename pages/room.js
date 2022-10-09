@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios'
 import Grid from '@mui/material/Grid';
 import PostCard from '../components/PostCard';
+import date from 'date-and-time';
 
 export default function Room() {
   
@@ -34,19 +35,42 @@ export default function Room() {
     getRoom();
 
     const getPosts = async() => {
-        let postsRes=null;
+      const postsRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/approved/posts/${roomJSONIdStr}`)
 
-        try{
-            postsRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/approved/posts/${roomJSONIdStr}`)
-            setPosts(postsRes.data);
-        } catch (err) {
-            console.error("error response");
-            console.error(err.response.data);
-            console.error(err.response.status);
-        } finally {
-            console.log("posts fetched by id: ", postsRes);
+      console.log("postsRes: ", postsRes);
+      const datedPosts = postsRes.data.map(obj => {
+        return {...obj, timestamp: date.parse(obj.timestamp, 'YYYY/MM/DD HH:mm:ss')} //string to date
+      })
+
+      console.log("presort, date parse", datedPosts);
+
+      const sortedPostsDesc = datedPosts.sort(
+        (objA, objB) => Number(objB.timestamp) - Number(objA.timestamp), //descending order (high to low --> new to old)
+      );
+
+      console.log("sorted posts desc: ", sortedPostsDesc);
+
+      const stringedPosts = sortedPostsDesc.map(obj => {
+        return {...obj, timestamp: date.format(obj.timestamp, 'YYYY/MM/DD HH:mm:ss')} //date to string
+      })
+
+      console.log("final", stringedPosts);
+      setPosts(stringedPosts);
+
+
+
+        // let postsRes=null;
+
+        // try{
             
-        }
+        // } catch (err) {
+        //     console.error("error response");
+        //     //console.error(err.response.data);
+        //     //console.error(err.response.status);
+        // } finally {
+        //     console.log("posts fetched by id: ", postsRes);
+            
+        // }
         
     }
 

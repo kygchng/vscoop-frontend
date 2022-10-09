@@ -77,19 +77,19 @@ export default function Post() {
 
 
             const datedComments = commentsRes.data.map(obj => {
-              return {...obj, timestamp: date.parse(obj.timestamp, 'YYYY/MM/DD HH:mm:ss')}
+              return {...obj, timestamp: date.parse(obj.timestamp, 'YYYY/MM/DD HH:mm:ss')} //string to date
             })
 
             console.log("presort, date parse", datedComments);
 
             const sortedCommentsDesc = datedComments.sort(
-              (objA, objB) => Number(objB.timestamp) - Number(objA.timestamp),
+              (objA, objB) => Number(objB.timestamp) - Number(objA.timestamp), //descending order (high to low --> new to old)
             );
 
             console.log("sorted comments desc: ", sortedCommentsDesc);
 
             const stringedComments = sortedCommentsDesc.map(obj => {
-              return {...obj, timestamp: date.format(obj.timestamp, 'YYYY/MM/DD HH:mm:ss')}
+              return {...obj, timestamp: date.format(obj.timestamp, 'YYYY/MM/DD HH:mm:ss')} //date to string
             })
 
             console.log("final", stringedComments);
@@ -206,7 +206,7 @@ export default function Post() {
         commentBody.username = userInfo.username;
         commentBody.avatarImage = userInfo.profile_picture;
         commentBody.text = contentRef.current.value;
-        commentBody.timestamp = date.format(now, 'YYYY/MM/DD HH:mm:ss'); // to be changed
+        commentBody.timestamp = date.format(now, 'YYYY/MM/DD HH:mm:ss'); //date to string
         commentBody.likes = [];
 
 
