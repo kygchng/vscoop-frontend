@@ -14,6 +14,12 @@ export default function ApprovePost() {
   const [postUserID, setPostUserID] = useState("");
 
   useEffect( () => {
+    if (user) {
+        console.log("you are loggied in ")
+      } else {
+        router.push("/api/auth/login")
+      }
+
     const postJSONIdStr = localStorage.getItem("postIdStr");
     console.log("postIdStr: ", postJSONIdStr);
 

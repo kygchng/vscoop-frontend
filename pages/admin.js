@@ -9,6 +9,14 @@ export default function Admin({roomsWithPosts}) {
   const { user, error, isLoading } = useUser();
   const router = useRouter();
   
+  useEffect( () => {
+    if (user) {
+        console.log("you are loggied in ")
+      } else {
+        router.push("/api/auth/login")
+      }
+  }, [])
+
   return (
     <div>
      <h1> Admin Tools Page </h1>

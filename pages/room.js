@@ -14,6 +14,12 @@ export default function Room() {
   const router = useRouter();
 
   useEffect( () => {
+    if (user) {
+      console.log("you are loggied in ")
+    } else {
+      router.push("/api/auth/login")
+    }
+
     const roomJSONIdStr = localStorage.getItem('roomIdStr')
     console.log("roomIdStr: ", roomJSONIdStr);
 
@@ -75,6 +81,7 @@ export default function Room() {
     }
 
     getPosts();
+
   }, [])
 
   const renderedPosts = posts.map((p) => {
@@ -88,6 +95,9 @@ export default function Room() {
      <h1>{room != null && room.name} </h1>
      {
         posts.length > 0 && <Grid container spacing={0.75}> {renderedPosts} </Grid> 
+     }
+     {
+        posts.length == 0 && <h3> No posts have been created yet. Be the first! </h3>
      }
     </div>
     

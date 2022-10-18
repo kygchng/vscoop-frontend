@@ -4,13 +4,23 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
 import PostCard from '../components/PostCard';
+import { useRouter } from 'next/router';
 
 export default function Profile () {
 
   const [userInfo, setUserInfo] = useState(null);
+  const { user, error, isLoading } = useUser();
   const [posts, setPosts] = useState([]);
+  const router = useRouter();
 
   useEffect( () => {
+    if (user) {
+      console.log("you are loggied in ")
+    } else {
+      router.push("/api/auth/login")
+    }
+
+
     var userID = localStorage.getItem("userIDString");
     const getUserInfo = async() => {
       const userRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/ID/${userID}`).catch(function (error) {
@@ -76,7 +86,7 @@ const renderedPosts = posts.map((p) => {
   console.log(userInfo);
   return (
     <div>
-      <h1> Your Profile</h1>
+      <h1> User Profile</h1>
       <div>
         {userInfo && <img src = {userInfo.profile_picture} alt = "avatar" width = "200" height = "200"/>}
         {userInfo && <h4> {userInfo.username} </h4>}
@@ -84,7 +94,7 @@ const renderedPosts = posts.map((p) => {
       </div>
       <br />
       <div>
-        <h2> Your Posts </h2>
+        <h2> User Posts </h2>
         {
         posts.length > 0 && <Grid container spacing={0.75}> {renderedPosts} </Grid> 
         }

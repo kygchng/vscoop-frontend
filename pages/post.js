@@ -15,6 +15,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import axios from 'axios';
 
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 const useStyles = makeStyles({
   field: {
       marginTop: 20,
@@ -40,7 +44,18 @@ export default function Post() {
     const [likes, setLikes] = useState(0);
     const router = useRouter();
 
+    const [open, setOpen] = useState(false); //snackbar
+    const [message, setMessage] = useState("");
+
     useEffect( () => {
+
+      if (user) {
+        console.log("you are loggied in ")
+      } else {
+        router.push("/api/auth/login")
+      }
+
+
         const postJSONIdStr = localStorage.getItem("postIdStr");
         console.log("postIdStr: ", postJSONIdStr);
 
@@ -218,6 +233,9 @@ export default function Post() {
             })
 
         contentRef.current.value = "";
+      } else {
+        setOpen(true);
+        setMessage("Comment is empty.");
       }
 
       // {
@@ -230,6 +248,32 @@ export default function Post() {
       // }
 
     }
+
+      //snackbar stuff
+      const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+
+        setOpen(false);
+    };
+
+    const action = (
+        <React.Fragment>
+        <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+        >
+            <CloseIcon fontSize="small" />
+        </IconButton>
+        </React.Fragment>
+    );
 
     const postCreatorClick = () => {
       localStorage.setItem("userIDString", postUserID);
@@ -327,6 +371,13 @@ export default function Post() {
                 >
                     Submit
                 </Button>
+                <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    message={message}
+                    action={action}
+                />
             </form>
             
             <br />

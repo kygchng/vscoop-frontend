@@ -91,11 +91,7 @@ export default function AdminPostCard({post}) {
                     {creator != null && creator.username}
                   </Typography>
                 </Grid>
-                <Grid item>
-                  <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                    {post.likes.length} Likes
-                  </Typography>
-                </Grid>
+               
               </Grid>
             </Grid>
           </Grid>

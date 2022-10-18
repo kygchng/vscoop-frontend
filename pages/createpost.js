@@ -17,6 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 //import UploadImagePost from '../components/UploadImagePost';
 import { UploadToS3 } from 'react-upload-to-s3'
+import Autocomplete from '@mui/material/Autocomplete';
 
 const useStyles = makeStyles({
     field: {
@@ -46,6 +47,13 @@ export default function CreatePost({sortedRooms}) {
 
 
     useEffect( () => {
+        if (user) {
+            console.log("you are loggied in ")
+          } else {
+            router.push("/api/auth/login")
+          }
+
+          
         const getUser = async() => {
             // you make api call
       
@@ -107,7 +115,7 @@ export default function CreatePost({sortedRooms}) {
         console.log(roomID);
   
   
-        if(titleRef.current.value && descriptionRef.current.value && userInfo && roomID) { {
+        if(titleRef.current.value && descriptionRef.current.value && userInfo && roomID && s3Image != "") { {
             console.log("made it in to submit");
             const now = new Date();
   
@@ -224,6 +232,15 @@ export default function CreatePost({sortedRooms}) {
                         </Select>
                     </FormControl>
                 </Box>
+
+                <Autocomplete 
+                    id="Room ID" 
+                    options={renderedRoomSelect} 
+                    renderInput={params => ( <TextField {...params} label="Room Name" variant="outlined" /> )} 
+                    getOptionLabel={option => option.name} 
+                    style={{ width: 270 }} 
+                    value={roomID} 
+                    onChange={(_event) => { handleChange }} />
 
                
                 <UploadToS3 

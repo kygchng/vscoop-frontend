@@ -90,6 +90,7 @@ export default function NavBar() {
 
   useEffect(() => {
     var userEmailStr = localStorage.getItem("email");
+    console.log("userEmailStr", userEmailStr);
 
     const getUser = async() => {
       const userRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${userEmailStr}`).catch(function (error) {

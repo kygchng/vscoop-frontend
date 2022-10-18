@@ -46,6 +46,7 @@ export default function Home() {
       if (user) {
         console.log("there is a user")
         const email = user.email;
+        localStorage.setItem("email", user.email);
 
 
         const res = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${email}`).catch(function (error) {

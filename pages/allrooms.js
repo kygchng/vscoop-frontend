@@ -12,6 +12,13 @@ export default function AllRooms({sortedRooms}) {
   const { user, error, isLoading } = useUser();
   const router = useRouter();
 
+  useEffect( () => {
+    if (user) {
+      console.log("you are loggied in ")
+    } else {
+      router.push("/api/auth/login")
+    }
+  }, [])
 
   // over here before the return perform a mapping of the rooms state
   // because each element in rooms would be a json
