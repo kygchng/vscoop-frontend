@@ -102,13 +102,17 @@ export default function NavBar() {
           console.log("ignore too");
         }
       });
-      const userDoc = userRes.data;
-      console.log("userDoc: ", userDoc);
-      if(userDoc.is_admin) {
-        setIsAdmin(true);
-      } 
+      if(userRes) {
+        const userDoc = userRes.data;
+        console.log("userDoc: ", userDoc);
+        if(userDoc.is_admin) {
+          setIsAdmin(true);
+        } 
+        setUserID(String(userDoc._id));
+      }
+      
 
-      setUserID(String(userDoc._id));
+     
       //when admin user logs out, the button is still there -- when logs out, must unrender - set localStorage
     }
 

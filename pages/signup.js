@@ -31,7 +31,6 @@ export default function Signup() {
   const usernameRef = useRef();
   const birthdayRef = useRef();
   const bioRef = useRef();
-  const pfpRef = useRef();
 
   const { user, error, isLoading } = useUser();
   const [userInfo, setUserInfo] = useState(null);
@@ -51,25 +50,28 @@ export default function Signup() {
       console.log(usernameRef.current.value);
       console.log(birthdayRef.current.value);
       console.log(bioRef.current.value);
-      console.log(pfpRef.current.value);
 
 
-      if(emailRef.current.value && usernameRef.current.value && birthdayRef.current.value && bioRef.current.value && pfpRef.current.value) {
+      if(emailRef.current.value && usernameRef.current.value && birthdayRef.current.value && bioRef.current.value && s3Image != "") {
         console.log("made it to api call for create user");
 
         var userBody = {};
+
+        var imageName = s3Image.substring(s3Image.indexOf("/") + 1);
+        var s3URL = `https://vscoop-uploads.s3.us-west-1.amazonaws.com/${imageName}`;
+        console.log("s3URL, ", s3URL);
 
         userBody.email= emailRef.current.value;
         userBody.password= "test";
         userBody.username= usernameRef.current.value;
         userBody.birthday= birthdayRef.current.value;
         userBody.bio= bioRef.current.value;
-        userBody.profile_picture= pfpRef.current.value;
+        userBody.profile_picture= s3URL;
         userBody.is_admin= false;
         userBody.rooms= [];
 
 
-        await axios.post('http://localhost:4000/api/v1/consumer/register/user', userBody)
+        await axios.post('https://mighty-island-44359.herokuapp.com/api/v1/consumer/register/user', userBody)
         .then(res => {
             console.log(res);
             localStorage.setItem('email', String(userBody.email));
@@ -143,13 +145,17 @@ export default function Signup() {
 
             <br />
             <br />
-            <TextField 
-                inputRef = {pfpRef}
-                type = "text"
-                label = "Profile Picture"
-                id="outlined-basic" 
-                variant="outlined" />
-            
+            <UploadToS3 
+                    bucket="vscoop-uploads"
+                    awsRegion="us-west-1"
+                    awsKey="AKIAQCFG5Q36VLMG6HOS"
+                    awsSecret="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"
+                    type="image"
+                    showNewUpload={false}
+                    onResult={(result) => {
+                        console.log('on Result', result);
+                        setS3Image(result.url);
+                    }} />
             <br />
             <br />
             <TextField
