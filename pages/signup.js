@@ -14,7 +14,8 @@ import date from 'date-and-time';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { UploadToS3 } from 'react-upload-to-s3'
+import { UploadToS3 } from 'react-upload-to-s3';
+import Link from 'next/link';
 
 const useStyles = makeStyles({
   field: {
@@ -116,7 +117,7 @@ export default function Signup() {
 
     return (
       <div>
-        <a href="/api/auth/logout">Logout</a>
+        <Link href="/api/auth/logout">Logout</Link>
 
         <h1> Sign Up </h1>
         <form onSubmit = {handleSubmit}>

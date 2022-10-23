@@ -15,8 +15,8 @@ export default function AdminAccordion({roomsWithPosts}) {
         console.log("room: ", r);
          const posts = r.postsJSON.map((p) => {
             return (
-                <div>
-                    <Grid item md={2}> <AdminPostCard post = {p} key = {p._id}/> </Grid>
+                <div key = {p._id}>
+                    <Grid item md={2} key = {p._id}> <AdminPostCard post = {p} key = {p._id}/> </Grid>
                 </div>
             )
         })
@@ -25,7 +25,7 @@ export default function AdminAccordion({roomsWithPosts}) {
         console.log(`panel${newIndex}a-header`);
     
         return (
-            <div>
+            <div key = {r._id} >
                 <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}

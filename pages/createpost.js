@@ -101,7 +101,7 @@ export default function CreatePost({sortedRooms}) {
     
       const renderedRoomSelect = sortedRooms.map((r) => {
         return (
-            <MenuItem value = {String(r._id)}> {r.name} </MenuItem>
+            <MenuItem value = {String(r._id)} key = {r._id}> {r.name} </MenuItem>
         )
       })
 

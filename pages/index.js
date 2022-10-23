@@ -5,6 +5,7 @@ import axios from 'axios'
 import RoomCard from "../components/RoomCard";
 import Grid from '@mui/material/Grid';
 import PersistentDrawer from '../components/NavBar';
+import Link from 'next/link';
 
 
 export default function Home() {
@@ -109,7 +110,7 @@ export default function Home() {
 
   const renderedRooms = rooms.map((r) => {
     return (
-        <Grid item md={5}> <RoomCard room = {r} key = {r._id}/> </Grid>
+        <Grid item md={5} key = {r._id}> <RoomCard room = {r} key = {r._id}/> </Grid>
     )
   })
   
@@ -118,9 +119,9 @@ export default function Home() {
       <PersistentDrawer />
       <section className="container">
         <div id="col-1">
-          <a href="/api/auth/login">Login</a>
+          <Link href="/api/auth/login">Login</Link>
           <br />
-          <a href="/api/auth/logout">Logout</a>
+          <Link href="/api/auth/logout">Logout</Link>
 
           <div className="header">
             <h1>V.Scoop</h1>

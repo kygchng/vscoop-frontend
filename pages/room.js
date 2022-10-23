@@ -86,7 +86,7 @@ export default function Room() {
 
   const renderedPosts = posts.map((p) => {
     return (
-        <Grid item md={4}> <PostCard post = {p} key = {p._id}/> </Grid>
+        <Grid item md={4} key = {p._id}> <PostCard post = {p} key = {p._id}/> </Grid>
     )
   })
   

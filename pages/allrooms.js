@@ -39,7 +39,7 @@ export default function AllRooms({sortedRooms}) {
 
   const renderedRooms = sortedRooms.map((r) => {
     return (
-        <Grid item md={4}> <RoomCard room = {r} key = {r._id}/> </Grid>
+        <Grid item md={4} key = {r._id}> <RoomCard room = {r} key = {r._id}/> </Grid>
     )
   })
   
