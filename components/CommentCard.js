@@ -30,7 +30,7 @@ const CommentCard=({comment}) => {
       const email = localStorage.getItem("userEmailForPost");
 
 
-      const res = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${email}`).catch(function (error) {
+      const res = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/user/email/${email}`).catch(function (error) {
         if(error.response) {
           console.log("email is not in api");
           router.push("/signup");

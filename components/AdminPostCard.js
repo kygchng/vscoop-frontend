@@ -45,7 +45,7 @@ export default function AdminPostCard({post}) {
     useEffect(() => {
         const getCreator = async() => {
             console.log(post.user_id);
-            const creatorRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/ID/${post.user_id}`);
+            const creatorRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/user/ID/${post.user_id}`);
             console.log("creator of post: ", creatorRes.data);
             setCreator(creatorRes.data);
         }

@@ -124,7 +124,7 @@ export default function Post() {
         //     //for each comment, make an API call to find the username
         //     console.log("COMMENT ID: ", comments[i].user_id);
 
-        //     const usernameRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/ID/${comments[i].user_id}`).catch(function (error) {
+        //     const usernameRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/user/ID/${comments[i].user_id}`).catch(function (error) {
         //       if(error.response) {
         //         console.log("ignore");
         //       } else if (error.request) {
@@ -174,7 +174,7 @@ export default function Post() {
     // const getUsername = async() => {
     //     console.log("made it in getUsername");
     //     console.log(post.user_id);
-    //     const userRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/ID/${post.user_id}`).catch(function (error) {
+    //     const userRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/user/ID/${post.user_id}`).catch(function (error) {
     //         if(error.response) {
     //           console.log("ignore");
     //         } else if (error.request) {
@@ -282,7 +282,7 @@ export default function Post() {
 
     // const addLike = async() => {
     //   const postID = String(post._id);
-    //   await axios.put(`http://localhost:4000/api/v1/consumer/increase/likes/${postID}/${userInfoID}`).catch(function (error) {
+    //   await axios.put(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/increase/likes/${postID}/${userInfoID}`).catch(function (error) {
     //             if(error.response) {
     //               console.log("ignore");
     //             } else if (error.request) {
@@ -298,7 +298,7 @@ export default function Post() {
 
     // const removeLike = async() => {
     //   const postID = String(post._id);
-    //   await axios.put(`http://localhost:4000/api/v1/consumer/decrease/likes/${postID}/${userInfoID}`).catch(function (error) {
+    //   await axios.put(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/decrease/likes/${postID}/${userInfoID}`).catch(function (error) {
     //             if(error.response) {
     //               console.log("ignore");
     //             } else if (error.request) {
@@ -317,7 +317,7 @@ export default function Post() {
     //   const postID = String(post._id);
     //   console.log("postID", postID);
     //   console.log("userInfoID: ", userInfoID);
-    //   const updatedPost = await axios.put(`http://localhost:4000/api/v1/consumer/like/post/${postID}/${userInfoID}`).catch(function (error) {
+    //   const updatedPost = await axios.put(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/like/post/${postID}/${userInfoID}`).catch(function (error) {
     //             if(error.response) {
     //               console.log("ignore");
     //             } else if (error.request) {

@@ -43,7 +43,7 @@ const LikeButtonComment=({userID, commentInitial}) => {
         console.log("====================================================================");
         // const userIDString = String(userID);
         // console.log("userInfoID: ", userInfoID);
-        const updatedComment = await axios.put(`http://localhost:4000/api/v1/consumer/like/comment/${commentID}/${userID}`).catch(function (error) {
+        const updatedComment = await axios.put(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/like/comment/${commentID}/${userID}`).catch(function (error) {
                   if(error.response) {
                     console.log("ignore");
                   } else if (error.request) {

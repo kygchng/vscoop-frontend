@@ -93,7 +93,7 @@ export default function NavBar() {
     console.log("userEmailStr", userEmailStr);
 
     const getUser = async() => {
-      const userRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${userEmailStr}`).catch(function (error) {
+      const userRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/user/email/${userEmailStr}`).catch(function (error) {
         if(error.response) {
           console.log("ignore");
         } else if (error.request) {
@@ -102,6 +102,7 @@ export default function NavBar() {
           console.log("ignore too");
         }
       });
+      console.log("userRes data: ", userRes);
       if(userRes) {
         const userDoc = userRes.data;
         console.log("userDoc: ", userDoc);
@@ -155,7 +156,7 @@ export default function NavBar() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" color = 'transparent' open={open}>
         <Toolbar>
           <IconButton
             color="inherit"

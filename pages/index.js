@@ -5,6 +5,8 @@ import axios from 'axios'
 import RoomCard from "../components/RoomCard";
 import Grid from '@mui/material/Grid';
 import PersistentDrawer from '../components/NavBar';
+
+
 export default function Home() {
   
   const { user, error, isLoading } = useUser();

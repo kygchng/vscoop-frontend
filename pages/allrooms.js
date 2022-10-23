@@ -60,7 +60,7 @@ export default function AllRooms({sortedRooms}) {
   )
 }
 
-//http://localhost:4000/api/v1/consumer/fetch/rooms
+//https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/rooms
 export async function getServerSideProps() {
     const roomsRes = await axios.get("https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/rooms");
     console.log("before sort: ", roomsRes.data);

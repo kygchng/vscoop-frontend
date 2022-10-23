@@ -24,7 +24,7 @@ const LikeButtonPost=({userID}) => {
     console.log("postIdStr: ", postJSONIdStr);
 
     const getPost = async() => {
-        const postRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/post/${postJSONIdStr}`).catch(function (error) {
+        const postRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/post/${postJSONIdStr}`).catch(function (error) {
             if(error.response) {
                 console.log("ignore");
             } else if (error.request) {
@@ -54,7 +54,7 @@ const LikeButtonPost=({userID}) => {
     console.log("postID", postID);
     console.log("userID", userID);
     // console.log("userInfoID: ", userInfoID);
-    const updatedPost = await axios.put(`http://localhost:4000/api/v1/consumer/like/post/${postID}/${userID}`).catch(function (error) {
+    const updatedPost = await axios.put(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/like/post/${postID}/${userID}`).catch(function (error) {
               if(error.response) {
                 console.log("ignore");
               } else if (error.request) {
