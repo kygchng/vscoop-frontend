@@ -23,7 +23,7 @@ export default function Profile () {
 
     var userID = localStorage.getItem("userIDString");
     const getUserInfo = async() => {
-      const userRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/ID/${userID}`).catch(function (error) {
+      const userRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/user/ID/${userID}`).catch(function (error) {
           if(error.response) {
             console.log("ignore");
           } else if (error.request) {
@@ -37,7 +37,7 @@ export default function Profile () {
       setUserInfo(userRes.data);
 
 
-      const postsRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/posts/user/${userID}`).catch(function(error) {
+      const postsRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/posts/user/${userID}`).catch(function(error) {
         if(error.response) {
           console.log("ignore");
         } else if (error.request) {

@@ -24,7 +24,7 @@ export default function Room() {
     console.log("roomIdStr: ", roomJSONIdStr);
 
     const getRoom = async() => {
-        const roomRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/room/${roomJSONIdStr}`).catch(function (error) {
+        const roomRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/room/${roomJSONIdStr}`).catch(function (error) {
             if(error.response) {
               console.log("ignore");
             } else if (error.request) {
@@ -41,7 +41,7 @@ export default function Room() {
     getRoom();
 
     const getPosts = async() => {
-      const postsRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/approved/posts/${roomJSONIdStr}`)
+      const postsRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/approved/posts/${roomJSONIdStr}`)
 
       console.log("postsRes: ", postsRes);
       const datedPosts = postsRes.data.map(obj => {

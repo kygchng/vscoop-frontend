@@ -24,7 +24,7 @@ export default function ApprovePost() {
     console.log("postIdStr: ", postJSONIdStr);
 
     const getPost = async() => {
-        const postRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/post/${postJSONIdStr}`).catch(function (error) {
+        const postRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/post/${postJSONIdStr}`).catch(function (error) {
             if(error.response) {
               console.log("ignore");
             } else if (error.request) {
@@ -51,7 +51,7 @@ const postCreatorClick = () => {
   const approvePostCall = async() => {
     //api call to approve post
     const postJSONIdStr = localStorage.getItem("postIdStr");
-    await axios.put(`http://localhost:4000/api/v1/consumer/approve/post/${postJSONIdStr}`).catch(function (error) {
+    await axios.put(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/approve/post/${postJSONIdStr}`).catch(function (error) {
         if(error.response) {
           console.log("ignore");
         } else if (error.request) {
@@ -68,7 +68,7 @@ const postCreatorClick = () => {
   const denyPostCall = async() => {
     //send an email to the person
     const postJSONIdStr = localStorage.getItem("postIdStr");
-    await axios.delete(`http://localhost:4000/api/v1/consumer/delete/post/${postJSONIdStr}`).catch(function (error) {
+    await axios.delete(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/delete/post/${postJSONIdStr}`).catch(function (error) {
         if(error.response) {
           console.log("ignore");
         } else if (error.request) {

@@ -28,7 +28,7 @@ export default function Admin({roomsWithPosts}) {
 
 
 export async function getServerSideProps() {
-    const roomsRes = await axios.get("http://localhost:4000/api/v1/consumer/fetch/rooms");
+    const roomsRes = await axios.get("https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/rooms");
     console.log("before sort: ", roomsRes.data);
 
     function getSortOrder() {
@@ -49,7 +49,7 @@ export async function getServerSideProps() {
 
     for(var i = 0; i < roomsWithPosts.length; i++) {
         const roomID = String(roomsWithPosts[i]._id);
-        const posts = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/unapproved/posts/${roomID}`);
+        const posts = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/unapproved/posts/${roomID}`);
         roomsWithPosts[i].postsJSON = posts.data;
     }
 

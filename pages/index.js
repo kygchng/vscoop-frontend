@@ -15,7 +15,7 @@ export default function Home() {
 
     const getRooms = async() => {
 
-      const roomsRes = await axios.get("http://localhost:4000/api/v1/consumer/fetch/rooms");
+      const roomsRes = await axios.get("https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/rooms");
       console.log("before sort: ", roomsRes.data);
 
       function getSortOrder() {
@@ -49,7 +49,7 @@ export default function Home() {
         localStorage.setItem("email", user.email);
 
 
-        const res = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${email}`).catch(function (error) {
+        const res = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/user/email/${email}`).catch(function (error) {
           if(error.response) {
             console.log("email is not in api");
             router.push("/signup");

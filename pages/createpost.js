@@ -53,7 +53,7 @@ export default function CreatePost({sortedRooms}) {
             router.push("/api/auth/login")
           }
 
-          
+
         const getUser = async() => {
             // you make api call
       
@@ -64,7 +64,7 @@ export default function CreatePost({sortedRooms}) {
             const emailStr = localStorage.getItem("email");
             console.log("email from localstorage:", emailStr);
 
-            const res = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${emailStr}`).catch(function (error) {
+            const res = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/user/email/${emailStr}`).catch(function (error) {
                 if(error.response) {
                   console.log("email is not in api");
                   router.push("/signup");
@@ -138,7 +138,7 @@ export default function CreatePost({sortedRooms}) {
             postBody.is_approved = false;
     
     
-            await axios.post('http://localhost:4000/api/v1/consumer/create/post', postBody)
+            await axios.post('https://mighty-island-44359.herokuapp.com/api/v1/consumer/create/post', postBody)
                 .then(res => {
                     console.log(res);
                     localStorage.setItem('postIdStr', String(res.data._id));
@@ -296,7 +296,7 @@ export default function CreatePost({sortedRooms}) {
   
 
 export async function getServerSideProps() {
-    const roomsRes = await axios.get("http://localhost:4000/api/v1/consumer/fetch/rooms");
+    const roomsRes = await axios.get("https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/rooms");
     console.log("before sort: ", roomsRes.data);
 
     function getSortOrder() {

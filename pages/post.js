@@ -60,7 +60,7 @@ export default function Post() {
         console.log("postIdStr: ", postJSONIdStr);
 
         const getPost = async() => {
-            const postRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/post/${postJSONIdStr}`).catch(function (error) {
+            const postRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/post/${postJSONIdStr}`).catch(function (error) {
                 if(error.response) {
                   console.log("ignore");
                 } else if (error.request) {
@@ -78,7 +78,7 @@ export default function Post() {
         getPost();
 
         const getComments = async() => {
-          const commentsRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/comments/${postJSONIdStr}`).catch(function (error) {
+          const commentsRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/comments/${postJSONIdStr}`).catch(function (error) {
                 if(error.response) {
                   console.log("ignore");
                 } else if (error.request) {
@@ -151,7 +151,7 @@ export default function Post() {
             const email = localStorage.getItem("userEmailForPost");
     
     
-            const res = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${email}`).catch(function (error) {
+            const res = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/user/email/${email}`).catch(function (error) {
               if(error.response) {
                 console.log("email is not in api");
                 router.push("/signup");
@@ -210,7 +210,7 @@ export default function Post() {
       if(contentRef.current.value && post && user) {
 
         var userEmail = user.email;
-        const userInfoRes = await axios.get(`http://localhost:4000/api/v1/consumer/fetch/user/email/${userEmail}`);
+        const userInfoRes = await axios.get(`https://mighty-island-44359.herokuapp.com/api/v1/consumer/fetch/user/email/${userEmail}`);
         const userInfo = userInfoRes.data; 
 
         const now = new Date();
@@ -225,7 +225,7 @@ export default function Post() {
         commentBody.likes = [];
 
 
-        await axios.post('http://localhost:4000/api/v1/consumer/create/comment', commentBody)
+        await axios.post('https://mighty-island-44359.herokuapp.com/api/v1/consumer/create/comment', commentBody)
             .then(res => {
                 setCommentJSON(commentBody)
             })
