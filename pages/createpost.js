@@ -19,6 +19,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import { UploadToS3 } from 'react-upload-to-s3'
 import Autocomplete from '@mui/material/Autocomplete';
 
+// import dynamic from 'next/dynamic';
+// const UploadToS3 = dynamic(
+//     () => import('react-upload-to-s3'),
+//     { ssr: false }
+//   )
+
 const useStyles = makeStyles({
     field: {
         marginTop: 20,

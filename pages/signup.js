@@ -17,6 +17,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import { UploadToS3 } from 'react-upload-to-s3';
 import Link from 'next/link';
 
+// import dynamic from 'next/dynamic';
+// // const UploadToS3 = dynamic(
+// //     () => import('react-upload-to-s3'),
+// //     { ssr: false }
+// //   )
+// const UploadToS3 = dynamic(()=>{return import('react-upload-to-s3')}, {ssr: false});
+
 const useStyles = makeStyles({
   field: {
       marginTop: 20,
@@ -41,6 +48,13 @@ export default function Signup() {
   const [message, setMessage] = useState("");
 
   const [s3Image, setS3Image] = useState("");
+
+
+  // useEffect(() => {
+  //   if (typeof window === 'undefined') {
+  //     global.window = {}
+  //   }
+  // }, [])
 
 
     const handleSubmit = async(e) => {
