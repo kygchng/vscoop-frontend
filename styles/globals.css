@@ -54,3 +54,8 @@ a {
   background-color: rgb(215, 215, 215);
   flex: 1.5;
 }
+
+h1 {
+  font-size: 3.3125rem;
+  line-height: 1.15em;
+}

@@ -239,15 +239,6 @@ export default function CreatePost({sortedRooms}) {
                     </FormControl>
                 </Box>
 
-                <Autocomplete 
-                    id="Room ID" 
-                    options={renderedRoomSelect} 
-                    renderInput={params => ( <TextField {...params} label="Room Name" variant="outlined" /> )} 
-                    getOptionLabel={option => option.name} 
-                    style={{ width: 270 }} 
-                    value={roomID} 
-                    onChange={(_event) => { handleChange }} />
-
                
                 <UploadToS3 
                     bucket="vscoop-uploads"
