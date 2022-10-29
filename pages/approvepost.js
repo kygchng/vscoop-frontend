@@ -86,7 +86,7 @@ const postCreatorClick = () => {
               <Stack spacing = {2}>
                 <div  onClick = {postCreatorClick}>
                   {post && <img src = {post.avatarImage} alt = "avatar" width = "50" height = "50"/>}
-                  {post && <h3> {post.username} </h3>}
+                  {post && <h4> {post.username} </h4>}
                 </div>
                   {post && <img src={post.picture} alt="post picture" />}
                   

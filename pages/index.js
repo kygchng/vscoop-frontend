@@ -160,11 +160,9 @@ export default function Home() {
             <br />
             
             <ThemeProvider theme={theme}>
-              <Button variant="contained" href="/api/auth/login" color="primary">
-                  Sign in
-              </Button>
-              < br />
-              < br />
+              {
+              !user && <Button variant="contained" href="/api/auth/login" color="primary"> Sign in </Button>
+              }
               {
               user && <Button variant="outlined" href="/api/auth/logout" color="primary"> Sign out </Button>
               }

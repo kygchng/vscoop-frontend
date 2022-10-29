@@ -94,7 +94,7 @@ const renderedPosts = posts.map((p) => {
       </div>
       <br />
       <div>
-        <h2> User Posts </h2>
+        <h4> User Posts </h4>
         {
         posts.length > 0 && <Grid container spacing={0.75}> {renderedPosts} </Grid> 
         }

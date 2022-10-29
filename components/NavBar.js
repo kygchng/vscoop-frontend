@@ -26,6 +26,20 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#ffffff',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      main: '#a82768',
+    },
+  },
+});
+
 
 const drawerWidth = 240;
 
