@@ -55,11 +55,17 @@ a {
   flex: 1.5;
 }
 
-h1 {
+h2 {
   font-size: 5rem;
   line-height: 1.15em;
   margin-left: 80px;
   color: white
+}
+
+h1 {
+  font-size: 3rem;
+  line-height: 1.15em;
+  color: black
 }
 
 h3 {

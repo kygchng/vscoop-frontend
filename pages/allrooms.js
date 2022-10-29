@@ -5,6 +5,7 @@ import axios from 'axios'
 import RoomCard from "../components/RoomCard";
 import Grid from '@mui/material/Grid';
 import SearchBar from "../components/SearchBar";
+import Box from '@mui/material/Box';
 
 
 export default function AllRooms({sortedRooms}) {
@@ -39,7 +40,7 @@ export default function AllRooms({sortedRooms}) {
 
   const renderedRooms = sortedRooms.map((r) => {
     return (
-        <Grid item md={4} key = {r._id}> <RoomCard room = {r} key = {r._id}/> </Grid>
+      <Grid item md={3} key = {r._id}> <RoomCard room = {r} key = {r._id}/> </Grid>
     )
   })
   
@@ -52,7 +53,7 @@ export default function AllRooms({sortedRooms}) {
         </div>
         <br/>
         <div>
-            <Grid container spacing={0.75}> {renderedRooms} </Grid> 
+          <Grid container spacing={3}> {renderedRooms} </Grid> 
         </div>
    </div>
    

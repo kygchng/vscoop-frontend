@@ -152,7 +152,7 @@ export default function Home() {
         <div className={classes.container}>
         <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
-            <h1 className={classes.title}> V.Scoop </h1>
+            <h2 className={classes.title}> V.Scoop </h2>
             <h3>
              Your daily virtual art museum digest. 
             </h3>
