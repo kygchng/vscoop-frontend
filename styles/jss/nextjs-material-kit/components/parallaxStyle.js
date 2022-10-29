@@ -5,16 +5,17 @@ const parallaxStyle = (theme) => ({
       overflow: "hidden",
       position: "relative",
       backgroundPosition: "center top",
+      background: "cover", 
       backgroundSize: "cover",
       margin: "0",
-      padding: "0",
+      padding: "10px",
       border: "0",
       display: "flex",
       alignItems: "center",
     },
     filter: {
       "&:before": {
-        background: "rgba(0, 0, 0, 0.5)",
+        background: "rgba(0, 0, 0, 0.2)",
       },
       "&:after,&:before": {
         position: "absolute",

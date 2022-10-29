@@ -8,7 +8,7 @@ body {
   background-color: white;
   margin: 10px;
   padding: 10px;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: ""Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;"
 
 }
 
@@ -56,6 +56,26 @@ a {
 }
 
 h1 {
-  font-size: 3.3125rem;
+  font-size: 5rem;
   line-height: 1.15em;
+  margin-left: 80px;
+  color: white
+}
+
+h3 {
+  font-size: 2rem;
+  line-height: 1.15em;
+  margin-left: 80px;
+  color: white
+}
+
+h4 {
+  font-size: 1.5rem;
+  line-height: 1.15em;
+  margin-left: 0px;
+  color: black
+}
+
+form {
+  margin-bottom: 1.125rem;
 }

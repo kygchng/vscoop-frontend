@@ -7,12 +7,43 @@ import Grid from '@mui/material/Grid';
 import PersistentDrawer from '../components/NavBar';
 import Link from 'next/link';
 
+// nodejs library that concatenates classes
+import classNames from "classnames";
+// @material-ui/core components
+import { makeStyles } from "@material-ui/core/styles";
+
+import Parallax from "/components/Parallax/Parallax.js";
+import GridContainer from "/components/Grid/GridContainer.js";
+import GridItem from "/components/Grid/GridItem.js";
+
+import styles from "../styles/jss/nextjs-material-kit/pages/landingPage.js";
+import Button from '@mui/material/Button';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+const useStyles = makeStyles(styles);
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#ffffff',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      main: '#a82768',
+    },
+  },
+});
 
 export default function Home() {
   
   const { user, error, isLoading } = useUser();
   const [rooms, setRooms] = useState([]);
   const router = useRouter();
+
+  const classes = useStyles();
+
+
+  
 
   useEffect( () => {
 
@@ -115,7 +146,60 @@ export default function Home() {
   })
   
   return (
+   
     <div>
+    <Parallax filter responsive image="https://media.istockphoto.com/photos/modern-abstract-background-picture-id1178390169?b=1&k=20&m=1178390169&s=170667a&w=0&h=wMuCApdJNQww4TaiO19Z1haAlBhI2n5wvmx4gMgkyP4=">
+        <div className={classes.container}>
+        <GridContainer>
+            <GridItem xs={12} sm={12} md={6}>
+            <h1 className={classes.title}> V.Scoop </h1>
+            <h3>
+             Your daily virtual art museum digest. 
+            </h3>
+            <h3> Discover, distribute, and discuss. </h3>
+            <br />
+            
+            <ThemeProvider theme={theme}>
+              <Button variant="contained" href="/api/auth/login" color="primary">
+                  Sign in
+              </Button>
+              < br />
+              < br />
+              {
+              user && <Button variant="outlined" href="/api/auth/logout" color="primary"> Sign out </Button>
+              }
+            </ThemeProvider>
+            
+            </GridItem>
+        </GridContainer>
+       
+        </div>
+    </Parallax>
+    <div className={classNames(classes.main, classes.mainRaised)}>
+      <div >
+        <GridContainer justify="center">
+          <GridItem xs={12} sm={12} md={8}>
+          <h4> Visit Our Most Popular Rooms </h4>
+
+          {
+          rooms.length > 0 && <Grid container spacing={0.75}> {renderedRooms} </Grid> 
+          }
+          <br />
+          <p onClick = {() => checkUser()}>View All Rooms</p>
+          </GridItem>
+        </GridContainer>
+      </div>
+    </div>
+    
+  </div>
+  )
+}
+
+
+
+
+/*
+ <div>
       <PersistentDrawer />
       <section className="container">
         <div id="col-1">
@@ -142,7 +226,4 @@ export default function Home() {
       </section>
     </div>
     
-  )
-}
-
-
+*/
