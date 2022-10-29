@@ -17,7 +17,9 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 //import UploadImagePost from '../components/UploadImagePost';
 import { UploadToS3 } from 'react-upload-to-s3'
-import Autocomplete from '@mui/material/Autocomplete';
+import Themes from 'react-ui-themes-superflows'
+import { Col, Row, Container } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // import dynamic from 'next/dynamic';
 // const UploadToS3 = dynamic(
@@ -51,6 +53,7 @@ export default function CreatePost({sortedRooms}) {
 
     const [s3Image, setS3Image] = useState("");
 
+    const theme = Themes.getTheme("Default");
 
     useEffect( () => {
         if (user) {
@@ -240,17 +243,18 @@ export default function CreatePost({sortedRooms}) {
                 </Box>
 
                
-                <UploadToS3 
-                    bucket="vscoop-uploads"
-                    awsRegion="us-west-1"
-                    awsKey="AKIAQCFG5Q36VLMG6HOS"
-                    awsSecret="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"
-                    type="image"
-                    showNewUpload={false}
-                    onResult={(result) => {
-                        console.log('on Result', result);
-                        setS3Image(result.url);
-                    }} />
+               <br /> 
+                    <UploadToS3 
+                        bucket="vscoop-uploads"
+                        awsRegion="us-west-1"
+                        awsKey="AKIAQCFG5Q36VLMG6HOS"
+                        awsSecret="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"
+                        type="image"
+                        showNewUpload={false}
+                        onResult={(result) => {
+                            console.log('on Result', result);
+                            setS3Image(result.url);
+                        }} />
 
                 <br />
                 <TextField
