@@ -166,7 +166,7 @@ export default function CreatePost({sortedRooms}) {
         } else {
             //implement snackbar - saying some fields are not filled
             setOpen(true);
-            setMessage("Imcomplete fields.");
+            setMessage("Incomplete fields.");
         }
   
         // {
