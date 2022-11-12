@@ -16,7 +16,7 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 //import UploadImagePost from '../components/UploadImagePost';
-import { UploadToS3 } from 'react-upload-to-s3'
+// import { UploadToS3 } from 'react-upload-to-s3'
 import Themes from 'react-ui-themes-superflows'
 import { Col, Row, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -244,7 +244,7 @@ export default function CreatePost({sortedRooms}) {
 
                
                <br /> 
-                    <UploadToS3 
+                    {/* <UploadToS3 
                         bucket="vscoop-uploads"
                         awsRegion="us-west-1"
                         awsKey="AKIAQCFG5Q36VLMG6HOS"
@@ -254,7 +254,7 @@ export default function CreatePost({sortedRooms}) {
                         onResult={(result) => {
                             console.log('on Result', result);
                             setS3Image(result.url);
-                        }} />
+                        }} /> */}
 
                 <br />
                 <TextField

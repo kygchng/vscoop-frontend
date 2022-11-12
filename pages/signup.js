@@ -14,7 +14,7 @@ import date from 'date-and-time';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { UploadToS3 } from 'react-upload-to-s3';
+// import { UploadToS3 } from 'react-upload-to-s3';
 import Link from 'next/link';
 
 // import dynamic from 'next/dynamic';
@@ -47,7 +47,7 @@ export default function Signup() {
   const [open, setOpen] = useState(false); //snackbar
   const [message, setMessage] = useState("");
 
-  const [s3Image, setS3Image] = useState("");
+  // const [s3Image, setS3Image] = useState("");
 
 
   // useEffect(() => {
@@ -160,7 +160,7 @@ export default function Signup() {
 
             <br />
             <br />
-            <UploadToS3 
+            {/* <UploadToS3 
                     bucket="vscoop-uploads"
                     awsRegion="us-west-1"
                     awsKey="AKIAQCFG5Q36VLMG6HOS"
@@ -170,7 +170,7 @@ export default function Signup() {
                     onResult={(result) => {
                         console.log('on Result', result);
                         setS3Image(result.url);
-                    }} />
+                    }} /> */}
             <br />
             <br />
             <TextField
